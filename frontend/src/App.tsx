@@ -1,9 +1,12 @@
 import "./App.css";
+import Todos from "./components/Todo";
 
 const App = () => {
   return (
     <>
-      <div className="">Todo App</div>
+      <div className="">
+        <Todos />
+      </div>
     </>
   );
 };
