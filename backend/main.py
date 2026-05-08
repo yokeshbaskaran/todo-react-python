@@ -1,10 +1,23 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from motor.motor_asyncio import AsyncIOMotorClient
+
+app = FastAPI()
+
 # models
 from pydantic import BaseModel
 
-app = FastAPI()
+# connect to MongoDB
+PORT = "mongodb://localhost:27017"
+client = AsyncIOMotorClient(PORT)
+
+# database
+db = client.todo_db
+
+# todo collection
+todos_col = db.todos
+
 
 origins = ["http://localhost:5173"]
 
@@ -40,9 +53,10 @@ def get_todos():
 
 
 @app.post("/todos")
-def add_todo(todo: Todo):
-    todos.append(todo.model_dump())
+async def add_todo(todo: Todo):
+    # todos.append(todo.model_dump())
     # print("todos:", todos)
+    await todos_col.insert_one(todo)
     return {"message": "Todo added"}
 
 
