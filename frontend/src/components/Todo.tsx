@@ -5,7 +5,7 @@ function Todos() {
   const [input, setInput] = useState("");
 
   type Todo = {
-    text: string;
+    title: string;
   };
 
   // Fetch todos
@@ -31,7 +31,7 @@ function Todos() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        text: input,
+        title: input,
       }),
     });
 
@@ -65,7 +65,7 @@ function Todos() {
       <ul>
         {todos.map((todo, index) => (
           <li key={index}>
-            {todo.text}
+            {todo.title}
 
             <button onClick={() => deleteTodo(index)}>Delete</button>
           </li>
